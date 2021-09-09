@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { fetchTopRatedMovies } from "../store/actions";
+import { fetchTopRatedMovies, doSortMovies } from "../store/actions";
 
 import logo from "./logo.svg";
 import "./MovieLibrary.css";
@@ -18,7 +18,10 @@ class MovieLibrary extends Component {
     const { fetchTopRatedMovies } = this.props;
     fetchTopRatedMovies();
   }
-  handleSortingChange = (sortingType) => console.log(sortingType);
+  handleSortingChange = (sortingType) => {
+    const { doSortMovies, movies } = this.props;
+    doSortMovies(movies, sortingType);
+  };
   render() {
     const { movies } = this.props;
     return (
@@ -40,5 +43,5 @@ export default connect(
   (state) => ({
     movies: getMovies(state),
   }),
-  { fetchTopRatedMovies }
+  { fetchTopRatedMovies, doSortMovies }
 )(MovieLibrary);
