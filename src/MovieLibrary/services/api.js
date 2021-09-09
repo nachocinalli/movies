@@ -12,3 +12,8 @@ export const apiGetMoviesPages = (pages) => {
 
   return Promise.all(allRequests);
 };
+export const apiGetMovies = (page) => {
+  const url = `${API_URL}/3/movie/now_playing?api_key=${API_KEY}&page=${page}`;
+
+  return fetch(url).then((response) => response.json());
+};

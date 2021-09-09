@@ -1,10 +1,11 @@
 import {
+  FETCH_MORE_MOVIES,
   FETCH_MOVIES,
   IS_LOADING,
   PAGES_LOADED,
   SORT_MOVIES,
 } from "../../actionTypes";
-import { apiGetMoviesPages } from "../services/api";
+import { apiGetMovies, apiGetMoviesPages } from "../services/api";
 const getMovies = (movies) => ({
   type: FETCH_MOVIES,
   payload: movies,
@@ -52,5 +53,26 @@ export function doSortMovies(movies, options) {
   }
   return (dispatch) => {
     dispatch(sortMovies(moviesSorted));
+  };
+}
+
+const fetchMoreMovies = (movies) => ({
+  type: FETCH_MORE_MOVIES,
+  payload: movies,
+});
+export function getMoreMovies(page) {
+  return (dispatch) => {
+    dispatch(getIsLoading(true));
+    const nextPage = page + 1;
+
+    apiGetMovies(nextPage)
+      .then((res) => {
+        dispatch(fetchMoreMovies(res.results));
+        dispatch(getIsLoading(false));
+        dispatch(getPagesLoaded(nextPage));
+      })
+      .catch((res) => {
+        console.log(res);
+      });
   };
 }
