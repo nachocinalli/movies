@@ -17,7 +17,10 @@ export class ExpandedMovieItem extends Component {
         overview,
       },
     } = this.props;
-
+    let poster = <img src="placeholder.png" alt={title} />;
+    if (poster_path) {
+      poster = <TMDBImage src={poster_path} alt={title} className="poster" />;
+    }
     return (
       <div>
         <div className="expanded-movie-item-shadow"></div>
@@ -43,9 +46,7 @@ export class ExpandedMovieItem extends Component {
           </button>
 
           <div className="expanded-movie-item-wrap">
-            <div className="expanded-movie-item-poster">
-              <TMDBImage src={poster_path} alt={title} />
-            </div>
+            <div className="expanded-movie-item-poster">{poster}</div>
             <div className="expanded-movie-item-description">
               <div className="expanded-movie-item-title">{title}</div>
               <div className="expanded-movie-item-release">

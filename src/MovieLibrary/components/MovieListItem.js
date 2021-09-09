@@ -11,13 +11,16 @@ export class MovieListItem extends Component {
       movie: { poster_path, title },
       isSelected,
     } = this.props;
-
+    let poster = <img src="placeholder.png" alt={title} />;
+    if (poster_path) {
+      poster = <TMDBImage src={poster_path} alt={title} className="poster" />;
+    }
     return (
       <div
         className={classNames("movie-list-item", { selected: isSelected })}
         onClick={this.handleClick.bind(this)}
       >
-        <TMDBImage src={poster_path} alt={title} className="poster" />
+        {poster}
       </div>
     );
   }
